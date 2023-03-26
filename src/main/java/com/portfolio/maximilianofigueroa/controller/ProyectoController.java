@@ -1,14 +1,14 @@
 package com.portfolio.maximilianofigueroa.controller;
 
-
 import com.portfolio.maximilianofigueroa.model.Proyecto;
 import com.portfolio.maximilianofigueroa.service.ProyectoService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/proyecto")
+@RequestMapping("/api/v1/proyecto")
 public class ProyectoController {
     private final ProyectoService proyectoService;
 
@@ -16,10 +16,10 @@ public class ProyectoController {
         this.proyectoService = proyectoService;
     }
 
-    @GetMapping("/id/{id}")
-    @ResponseBody
-    public Proyecto buscarProyecto(@PathVariable("id") Long id) {
-        return proyectoService.buscarProyecto(id);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/agregar")
+    public void agregarProyecto(@RequestBody Proyecto proyecto) {
+        proyectoService.agregarProyecto(proyecto);
     }
 
     @GetMapping("/ver")
@@ -28,16 +28,13 @@ public class ProyectoController {
         return proyectoService.verProyectos();
     }
 
-    @PostMapping("/agregar")
-    public void agregarProyecto(@RequestBody Proyecto proyecto) {
-        proyectoService.agregarProyecto(proyecto);
-    }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/editar")
     public void editarProyecto(@RequestBody Proyecto proyecto) {
         proyectoService.editarProyecto(proyecto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/borrar/{id}")
     public void borrarProyecto(@PathVariable("id") Long id) {
         proyectoService.borrarProyecto(id);

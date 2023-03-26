@@ -1,31 +1,41 @@
 package com.portfolio.maximilianofigueroa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Proyecto {
+@Table(name = "proyecto")
+public class Proyecto implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long idProyecto;
+
+    @Column(name = "titulo")
     private String tituloProyecto;
-    private String fechaProyecto;
+
+    @Column(name = "fecha_inicio")
+    private Integer fechaInicioProyecto;
+
+    @Column(name = "fecha_fin")
+    private Integer fechaFinProyecto;
+
+    @Column(name = "descripcion")
     private String descripcionProyecto;
+
+    @Column(name = "imagen")
     private String imagenProyecto;
+
+    @Column(name = "url")
     private String urlProyecto;
-
-    public Proyecto() {}
-
-    public Proyecto(Long idProyecto, String tituloProyecto, String fechaProyecto, String descripcionProyecto, String imagenProyecto, String urlProyecto) {
-        this.idProyecto = idProyecto;
-        this.tituloProyecto = tituloProyecto;
-        this.fechaProyecto = fechaProyecto;
-        this.descripcionProyecto = descripcionProyecto;
-        this.imagenProyecto = imagenProyecto;
-        this.urlProyecto = urlProyecto;
-    }
 }
